@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Hendrik Pfaff - based on simple Bootstrap demo">
+    <title>Dashboard</title>
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="../css/dashboard.css" rel="stylesheet">
+</head>
+<body>
+<header class="navbar navbar-dark sticky-top bg-light flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-4 me-0 px-3" href="#">
+        <img src="../img/b-free-logo.svg" width="100" height="50"/>
+        <img src="../img/fra-uas-logo.png" width="100" height="50"/>
+    </a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+            aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <!--<input class="form-control form-control-white w-100" type="text" placeholder="Suche" aria-label="Search">-->
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="#">Ausloggen</a>
+        </li>
+    </ul>
+</header>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="position-sticky pt-3">
+                <div style="height: 400px; max-height:400px !important;">
+                    <!-- List of currently online users. -->
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Teilnehmer</span>
+                        <a class="link-secondary" href="#" aria-label="Teilnehmer online">
+                            <span data-feather="plus-circle"></span>
+                        </a>
+                    </h6>
+                    <div style="overflow-y: auto; height:100%;">
+                        <ul class="nav flex-column" id="currentUserList"></ul>
+                    </div>
+                </div>
+
+                <hr/>
+
+                <div style="min-height: 400px; height: 50%;">
+                    <!-- Chatbox. -->
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span>Chat</span>
+                        <a class="link-secondary" href="#" aria-label="Chat">
+                            <span data-feather="plus-circle"></span>
+                        </a>
+                    </h6>
+                    <div class="chatbox">
+                        <ul class="list-group list-group-flush" id="message-list">
+
+                        </ul>
+                    </div>
+                    <div class="info"></div>
+                    <div class="input-group">
+                        <input type="text" class="form-control form-control-sm" id="message"
+                               placeholder="Neue Nachricht">
+                        <div class="input-group-append">
+                            <button class="btn btn-sm btn-success" type="button" id="messageBtn">Senden</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Dashboard</h1>
+            </div>
+            <div id="maincanvas">
+                <img src="../img/rondell.png" style="margin: auto;"/>
+                <img id="my-avatar" src="../img/turquoise.png" style="position: absolute; height:50px; top:100px; left: 500px; border: 1px solid red"/>
+            </div>
+        </main>
+
+    </div>
+</div>
+
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
+<script src="/js/event.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
+        integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
+        crossorigin="anonymous"></script>
+<script src="../js/dashboard.js"></script>
+</body>
+</html>
+

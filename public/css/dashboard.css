@@ -1,0 +1,150 @@
+body {
+  font-size: .875rem;
+}
+
+.feather {
+  width: 16px;
+  height: 16px;
+  vertical-align: text-bottom;
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  /* rtl:raw:
+  right: 0;
+  */
+  bottom: 0;
+  /* rtl:remove */
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 48px 0 0; /* Height of navbar */
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    top: 5rem;
+  }
+}
+
+.sidebar-sticky {
+  position: relative;
+  top: 0;
+  height: calc(100vh - 48px);
+  padding-top: .5rem;
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  color: #333;
+}
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+  color: #727272;
+}
+
+.sidebar .nav-link.active {
+  color: #007bff;
+}
+
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+  padding-top: .75rem;
+  padding-bottom: .75rem;
+  font-size: 1rem;
+  background-color: rgba(0, 0, 0, .25);
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+}
+
+.navbar .navbar-toggler {
+  top: .25rem;
+  right: 1rem;
+}
+
+.navbar .form-control {
+  padding: .75rem 1rem;
+  border-width: 0;
+  border-radius: 0;
+}
+
+.form-control-dark {
+  color: #fff;
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+/**
+Chatbox
+ */
+.chatbox {
+  border:1px solid lightgrey;
+  background-color: white;
+  margin: 1%;
+  padding: 1%;
+  height: 50%;
+  min-height: 350px;
+}
+
+.msg-body {
+  margin-left:35px;
+  margin-right: 10%;
+  padding:1px;
+  border-radius:5px;
+  background-color: lightgray;
+  border: 1px solid gray;
+}
+
+.msg-user-circle {
+  background-color: darkred;
+  border: 1px solid saddlebrown;
+  display: table-cell;
+  line-height: 1em;
+  vertical-align: middle;
+  border-radius: 15px;
+  font-weight: bold;
+  width:30px;
+  height: 30px;
+  text-align: center;
+  color: white;
+}
+
+.msg-sender-username {
+  font-weight: bold;
+  display: block;
+}
+
+.msg-actual {
+  display: block;
+  margin-top:2px;
+  margin-bottom: 2px;
+}
+
+.msg-timestamp{
+  font-size: 0.75em;
+}
