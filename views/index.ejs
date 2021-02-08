@@ -45,12 +45,12 @@
     </ul>
 </header>
 
-<div class="container-fluid">
-    <div class="row">
+<div class="container-fluid" style="height: 100%;">
+    <div class="row" style="height: 100%;">
+        <nav id="sidebarMenu" class="col-2" style="height: 100%">
+            <div class="position-sticky pt-3" style="height: 100%">
 
-        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-            <div class="position-sticky pt-3">
-                <div style="height: 400px; max-height:400px !important;">
+                <div style="height: 50% !important; min-height: 50% !important;">
                     <!-- List of currently online users. -->
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                         <span>Teilnehmer</span>
@@ -65,7 +65,7 @@
 
                 <hr/>
 
-                <div style="min-height: 400px; height: 50%;">
+                <div style="height: 50%;">
                     <!-- Chatbox. -->
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                         <span>Chat</span>
@@ -73,7 +73,7 @@
                             <span data-feather="plus-circle"></span>
                         </a>
                     </h6>
-                    <div class="chatbox">
+                    <div class="chatbox" style="height: 50%;">
                         <ul class="list-group list-group-flush" id="message-list">
 
                         </ul>
@@ -95,11 +95,15 @@
             </div>
         </nav>
 
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Dashboard</h1>
+        <main class="col-md-10" style="height: 75%;">
+            <div class="row" style="width: 100%;">
+                <div class="justify-content-between align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Dashboard</h1>
+                </div>
             </div>
-            <div id="maincanvas"></div>
+            <div class="row" style="height:100%; width: 100%;">
+                <div id="maincanvas" style="height:100%; display: block"></div>
+            </div>
         </main>
 
     </div>

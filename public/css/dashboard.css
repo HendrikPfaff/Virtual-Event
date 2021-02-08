@@ -1,5 +1,20 @@
-body {
+
+
+html, body {
   font-size: .875rem;
+}
+
+/* use viewport-relative units to cover page fully */
+body {
+  height: 100vh;
+  width: 100vw;
+}
+
+/* include border and padding in element width and height */
+* {
+  box-sizing: border-box;
+  margin:0;
+  padding: 0;
 }
 
 .feather {
@@ -107,17 +122,27 @@ Chatbox
   background-color: white;
   margin: 1%;
   padding: 1%;
-  height: 50%;
-  min-height: 350px;
+  overflow-y: auto;
 }
 
-.msg-body {
+.external-msg-body {
   margin-left:35px;
   margin-right: 10%;
   padding:1px;
   border-radius:5px;
   background-color: lightgray;
   border: 1px solid gray;
+}
+
+.interal-msg-body{
+  margin-left:20%;
+  margin-right: 5px;
+  margin-top:5px;
+  padding: 1px;
+  border-radius: 5px;
+  color:white;
+  background-color: dodgerblue;
+  border: 1px solid blue;
 }
 
 .msg-user-circle {
@@ -149,11 +174,21 @@ Chatbox
   font-size: 0.75em;
 }
 
+#afkButton {
+  margin: 5px;
+  width:100%;
+}
+
 /**
  Canvas
  */
 #maincanvas{
-  background:url('../img/backgrounds/rondell.png') no-repeat fixed center;
+  margin:0;
+  padding: 0;
+  background:url('../img/backgrounds/rondell.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
 }
 
 /**
@@ -162,6 +197,19 @@ Chatbox
 
 .avatar {
   position: absolute;
+  display: block;
+}
+
+.avatar img {
+  margin:auto;
   height:50px;
-  border: 1px solid red
+  display: block;
+}
+
+.avatar span {
+  color: white;
+  text-shadow: -1px 1px 0 #000,
+                1px 1px 0 #000,
+                1px -1px 0 #000,
+               -1px -1px 0 #000;
 }
