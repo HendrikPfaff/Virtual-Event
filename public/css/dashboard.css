@@ -148,3 +148,20 @@ Chatbox
 .msg-timestamp{
   font-size: 0.75em;
 }
+
+/**
+ Canvas
+ */
+#maincanvas{
+  background:url('../img/backgrounds/rondell.png') no-repeat fixed center;
+}
+
+/**
+ Avatars
+ */
+
+.avatar {
+  position: absolute;
+  height:50px;
+  border: 1px solid red
+}

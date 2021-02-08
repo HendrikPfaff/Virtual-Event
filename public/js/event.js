@@ -1,41 +1,78 @@
+/**
+ *        .-._
+ *      .-| | |
+ *    _ | | | |__FRANKFURT
+ *  ((__| | | | UNIVERSITY
+ *     OF APPLIED SCIENCES
+ *
+ *  (c) 2021
+ *
+ *  This Project was created during the IPR3 in the winter term 2020/21
+ *  by Hendrik Pfaff
+ */
+
+// Welcome message.
+console.log("       .-._\n     .-| | |\n   _ | | | |__FRANKFURT\n ((__| | | | UNIVERSITY\n     OF APPLIED SCIENCES");
+
 (function connect(){
     let socket = io.connect('http://localhost:3000')
-    let myUsername = ""
+    let currentUser = null
+    let myAvatar = null
     let maincanvas = document.querySelector('#maincanvas')
-    let avatars = []
 
-    // Userlist.
+    // Recieve my username from Server.
+    socket.on('userConnected', data=>{
+        currentUser = data.user
+        console.log(currentUser)
+    })
+
+    // Update the userlist.
     let userList = document.querySelector('#currentUserList')
     function displayOnlineList(item, index){
+        userList.innerHTML = "";
+
         let userItem = document.createElement('li')
         userItem.classList.add('nav-item')
 
         let userLink = document.createElement('a')
         userLink.classList.add('nav-link')
-        userLink.textContent =  item
+        userLink.textContent =  item.username
 
         userItem.appendChild(userLink)
         userList.appendChild(userItem)
     }
 
+    // Update avatar positions
     function displayAvatars(item, index){
-        console.log("Show avatars");
+        let avatar = document.createElement('img')
+        avatar.src = item.avatarImg
+        avatar.classList.add('avatar')
+        avatar.style.left = item.positionX + "px"
+        avatar.style.top = item.positionY + "px"
+
+        if(item.username === currentUser.username){
+            avatar.id = 'my-avatar'
+            myAvatar = avatar
+        }
+
+        maincanvas.appendChild(avatar)
+        console.log(avatar)
     }
 
+    function displayUser(item, index){
+        displayOnlineList(item, index)
+        displayAvatars(item, index)
+    }
+
+    // Some other user joins.
     socket.on('user_joins', data => {
-        // Reprint the userList.
-        userList.innerHTML = "";
-        data.onlineList.forEach(displayOnlineList)
-        // Redraw the avatars.
-        avatars = []
-        data.avatars.forEach(displayAvatars)
-        console.log(avatars)
+        // Refresh the current users / avatars.
+        data.onlineList.forEach(displayUser)
     })
 
+    // Some other user leaves.
     socket.on('user_leaves', data => {
-        userList.innerHTML = "";
-        data.onlineList.forEach(displayOnlineList)
-        data.avatars.forEach(displayAvatars)
+        data.onlineList.forEach(displayUser)
     })
 
     // Message handling.
@@ -53,7 +90,7 @@
     socket.on('receive_message', data => {
         let listItem = document.createElement('li')
 
-        if(data.username != myUsername){
+        if(data.username != currentUser.username){
             // Message is from another user (incoming).
             let userCircle = document.createElement('div')
             userCircle.classList.add('msg-user-circle')
@@ -89,25 +126,24 @@
 
 
     // Typing indicator.
-    let info = document.querySelector('.info')
+    //let info = document.querySelector('.info')
+    //message.addEventListener('keypress', e => {
+    //    if(e.key === "Enter"){
+    //        messageBtn.click()
+    //    } else {
+    //        socket.emit('typing')
+    //    }
+    //})
 
-    message.addEventListener('keypress', e => {
-        if(e.key === "Enter"){
-            messageBtn.click()
-        } else {
-            socket.emit('typing')
-        }
-    })
-
-    socket.on('typing', data => {
-        info.textContent = data.username + " is typing..."
-        setTimeout(() => {info.textContent=''}, 2000)
-    })
+    //socket.on('typing', data => {
+    //    info.textContent = data.username + " is typing..."
+    //    setTimeout(() => {info.textContent=''}, 2000)
+    //})
 
 
-    // Moving the avatar.
+    // Moving my avatar.
     let body = document.querySelector('body')
-    let myAvatar = document.querySelector('#my-avatar')
+    let imgAvatar = document.querySelector('#my-avatar')
     let currentPositionX = 0
     let currentPositionY = 0
     let moveAvatar = false
@@ -118,6 +154,7 @@
         if(moveAvatar){
             myAvatar.style.left = currentPositionX + "px"
             myAvatar.style.top = currentPositionY + "px"
+            socket.emit('avatarMoves', {username: currentUser.username, positionX: currentPositionX, positionY: currentPositionY})
         }
     })
 
