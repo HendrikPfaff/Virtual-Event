@@ -53,7 +53,7 @@ class RoomLink{
     function renderBackground(room){
 
 
-        maincanvas.style.background = 'url("../img/backgrounds/kino.png")'
+        maincanvas.style.background = 'url("../img/backgrounds/vortragsraum.png")'
         maincanvas.style.backgroundRepeat = 'no-repeat'
         maincanvas.style.backgroundPosition = 'center center'
         maincanvas.style.backgroundSize = 'cover'
@@ -199,6 +199,12 @@ class RoomLink{
     //    info.textContent = data.username + " is typing..."
     //    setTimeout(() => {info.textContent=''}, 2000)
     //})
+
+    // User is afk.
+    let afkButton = document.querySelector('#afkButton')
+    afkButton.addEventListener('click', e =>{
+        console.log(currentUser.username + " is afk")
+    })
 
 
     // Moving my avatar.
