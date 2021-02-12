@@ -36,8 +36,7 @@ class RoomLink{
 }
 
 (function connect(){
-    let socket = io.connect('http://localhost:3000')
-
+    let socket = io.connect('http://localhost:80')
     // Make sure every username is unique for now.
     let randomDelta = Math.floor(Math.random()*250)
     // Get a random avatar.
@@ -53,7 +52,7 @@ class RoomLink{
     function renderBackground(room){
 
 
-        maincanvas.style.background = 'url("../img/backgrounds/vortragsraum.png")'
+        maincanvas.style.background = 'url("../img/backgrounds/rondell.png")'
         maincanvas.style.backgroundRepeat = 'no-repeat'
         maincanvas.style.backgroundPosition = 'center center'
         maincanvas.style.backgroundSize = 'cover'

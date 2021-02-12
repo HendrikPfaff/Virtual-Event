@@ -14,7 +14,7 @@
 const express = require('express')
 const socketio = require('socket.io')
 const app = express()
-const port = 3000
+const port = 80
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
