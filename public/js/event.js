@@ -37,10 +37,7 @@ class RoomLink{
 
 (function connect(){
     let socket = io.connect('http://localhost:80', {
-        withCredentials: true,
-        extraHeaders: {
-            "my-header": "abcd"
-        }
+        withCredentials: true
     })
     // Make sure every username is unique for now.
     let randomDelta = Math.floor(Math.random()*250)
