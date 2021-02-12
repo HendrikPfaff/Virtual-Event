@@ -33,7 +33,7 @@ const server = app.listen(process.env.PORT || port, () => {
 
 const io = socketio(server, {
     cors: {
-        origin: "localhots",
+        origin: "localhost",
         methods: ["GET", "POST"],
         allowedHeaders: ["my-header"],
         credentials: true
