@@ -36,7 +36,7 @@ class RoomLink{
 }
 
 (function connect(){
-    let socket = io.connect('http://localhost:80', {
+    let socket = io.connect('https://bfree.herokuapp.com:80', {
         withCredentials: true
     })
     // Make sure every username is unique for now.
