@@ -29,7 +29,17 @@ const server = app.listen(process.env.PORT || port, () => {
 
 
 //initialize socket for the server
-const io = socketio(server)
+//const io = socketio(server)
+
+const io = socketio(server, {
+    cors: {
+        origin: "localhots",
+        methods: ["GET", "POST"],
+        allowedHeaders: ["my-header"],
+        credentials: true
+    }
+});
+
 // User handling.
 let currentUsersOnline = []
 
