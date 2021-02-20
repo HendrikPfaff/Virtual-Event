@@ -33,35 +33,93 @@ class RoomLink{
         this.positionX = positionX
         this.positionY = positionY
     }
+
+    showOn(canvas){
+        let logo = document.createElement('a')
+        logo.href = this.link
+        logo.classList.add('roomLink')
+        logo.style.top = this.positionY + "px"
+        logo.style.left = this.positionX + "px"
+
+        let logoImg = document.createElement('img')
+        logoImg.src = this.img
+
+        let logoLabel = document.createElement('span')
+        logoLabel.innerHTML = this.label
+
+        logo.appendChild(logoImg)
+        logo.appendChild(logoLabel)
+        canvas.appendChild(logo)
+
+        logo.addEventListener('mouseover', e=>{
+            e.preventDefault()
+            console.log("overlap with " + this.label)
+        })
+    }
+}
+
+class mediaFrame {
+    constructor(link, width, height, positionX, positionY) {
+        this.link = link
+        this.width = width
+        this.height = height
+        this.positionX = positionX
+        this.positionY = positionY
+    }
+
+    showOn(canvas){
+        let frame = document.createElement('iframe')
+        frame.src = this.link
+        frame.referrerpolicy = "no-referrer"
+        frame.allowpaymentrequest = "false"
+        frame.loading = "eager"
+        frame.classList.add('mediaFrame')
+        frame.style.top = this.positionY + "px"
+        frame.style.left = this.positionX + "px"
+        frame.height = this.height
+        frame.width = this.width
+
+        canvas.appendChild(frame)
+    }
 }
 
 (function connect(){
-    let socket = io.connect('https://bfree.herokuapp.com:80', {
+    let socket = io.connect('localhost:3000', {
         withCredentials: true
     })
     // Make sure every username is unique for now.
     let randomDelta = Math.floor(Math.random()*250)
     // Get a random avatar.
-    let currentUser = new User(randomDelta, "Hendrik Pfaff", '../img/avatars/turquoise.png', (500 + randomDelta), (500 + randomDelta))
+    let currentUser = new User(randomDelta, randomDelta, '../img/avatars/turquoise.png', (500 + randomDelta), (500 + randomDelta))
     let myAvatar = document.createElement('img')
     let maincanvas = document.querySelector('#maincanvas')
     let avatarList = []
+    let roomElementList = []
+    roomElementList.push(new RoomLink("Kino", "#", "../img/icons/cinema.png", 600, 600))
+    roomElementList.push(new RoomLink("Lupe", "#", "../img/icons/magnifier.png", 500, 500))
+    //roomElementList.push(new mediaFrame("https://google.de", 300, 300, 600, 300))
+
 
 
     // Tell server, who we are.
     socket.emit('userConnected', {user: currentUser})
 
     function renderBackground(room){
-
-
         maincanvas.style.background = 'url("../img/backgrounds/rondell.png")'
         maincanvas.style.backgroundRepeat = 'no-repeat'
         maincanvas.style.backgroundPosition = 'center center'
-        maincanvas.style.backgroundSize = 'cover'
 
         console.log("background")
     }
     renderBackground()
+
+    function showElements(item, index){
+        item.showOn(maincanvas)
+    }
+
+    function displayRoomElements(){
+        roomElementList.forEach(showElements)
+    }
 
     // Update the userlist.
     let userList = document.querySelector('#currentUserList')
@@ -123,6 +181,8 @@ class RoomLink{
         avatarList = []
         // Refresh the current users / avatars.
         data.onlineList.forEach(displayUser)
+
+        displayRoomElements()
     })
 
     // Message handling.
@@ -205,6 +265,7 @@ class RoomLink{
     let afkButton = document.querySelector('#afkButton')
     afkButton.addEventListener('click', e =>{
         console.log(currentUser.username + " is afk")
+        //TODO: Open modal with bathroom
     })
 
 

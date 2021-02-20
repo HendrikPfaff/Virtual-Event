@@ -14,7 +14,7 @@
 const express = require('express')
 const socketio = require('socket.io')
 const app = express()
-const port = 80
+const port = 3000
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
@@ -29,15 +29,16 @@ const server = app.listen(process.env.PORT || port, () => {
 
 
 //initialize socket for the server
-//const io = socketio(server)
+const io = socketio(server)
 
+/*
 const io = socketio(server, {
     cors: {
         origin: "https://bfree.herokuapp.com/",
         methods: ["GET", "POST"],
         credentials: true
     }
-});
+})*/
 
 // User handling.
 let currentUsersOnline = []
@@ -68,8 +69,6 @@ io.on('connection', socket => {
         io.sockets.emit('update', {onlineList: currentUsersOnline})
     })
 
-
-
     //handle the new message event.
     socket.on('new_message', data => {
         console.log("new message")
@@ -83,7 +82,7 @@ io.on('connection', socket => {
 
     // Handling avatar movement.
     socket.on('avatarMoves', data => {
-        //console.log("Avatar of " + data.username + " moves to " + data.positionX + " | " + data.positionY)
+        console.log("Avatar of " + data.username + " moves to " + data.positionX + " | " + data.positionY)
         let user = currentUsersOnline.find(element => element.username === data.username)
         user.avatarPositionX = data.positionX
         user.avatarPositionY = data.positionY

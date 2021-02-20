@@ -17,6 +17,11 @@ body {
   padding: 0;
 }
 
+a {
+  color: black;
+  text-decoration: none;
+}
+
 .feather {
   width: 16px;
   height: 16px;
@@ -188,7 +193,6 @@ Chatbox
   background:url('../img/backgrounds/rondell.png');
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: cover;
 }
 
 /**
@@ -208,8 +212,46 @@ Chatbox
 
 .avatar span {
   color: white;
+  display:block;
+  margin:auto;
+  text-align: center;
   text-shadow: -1px 1px 0 #000,
                 1px 1px 0 #000,
                 1px -1px 0 #000,
                -1px -1px 0 #000;
 }
+
+/**
+ Room links
+ */
+
+.roomLink {
+  position: absolute;
+  display: block;
+  z-index: -1;
+}
+
+.roomLink img {
+  margin:auto;
+  height:50px;
+  display: block;
+}
+
+.roomLink span {
+  color: white;
+  margin: auto;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+
+  text-shadow: -1px 1px 0 #000,
+  1px 1px 0 #000,
+  1px -1px 0 #000,
+  -1px -1px 0 #000;
+}
+
+.mediaFrame {
+  position: absolute;
+  border: 1px solid black;
+}
+
