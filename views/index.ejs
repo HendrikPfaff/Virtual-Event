@@ -1,13 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="Hendrik Pfaff - based on simple Bootstrap demo">
-    <title>Dashboard</title>
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.79.0">
+    <title>Signin Template · Bootstrap v5.0</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+
+
+
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
+
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -23,100 +30,27 @@
             }
         }
     </style>
+
+
     <!-- Custom styles for this template -->
-    <link href="../css/dashboard.css" rel="stylesheet">
+    <link href="../css/index.css" rel="stylesheet">
 </head>
-<body>
-<header class="navbar navbar-dark sticky-top bg-light flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-4 me-0 px-3" href="#">
-        <img src="../img/b-free-logo.svg" width="100" height="50"/>
-        <img src="../img/fra-uas-logo.png" width="100" height="50"/>
-    </a>
-    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
-            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
-            aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <!--<input class="form-control form-control-white w-100" type="text" placeholder="Suche" aria-label="Search">-->
-    <ul class="navbar-nav px-3">
-        <li class="nav-item text-nowrap">
-            <a class="nav-link" href="#">Ausloggen</a>
-        </li>
-    </ul>
-</header>
+<body class="text-center">
 
-<div class="container-fluid" style="height: 100%;">
-    <div class="row" style="height: 100%;">
-        <nav id="sidebarMenu" class="col-2" style="height: 100%">
-            <div class="position-sticky pt-3" style="height: 100%">
+<main class="form-signin">
+    <form action="/dashboard" method="POST">
+        <img class="mb-6" src="../img/b-free-logo.svg" alt="" width="72" height="57">
+        <img class="mb-6" src="../img/fra-uas-logo.png" alt="" height="57">
+        <h1 class="h3 mb-3 fw-normal" style="margin-top: 15px;">Virtuelles Event 2021</h1>
+        <label for="username" class="visually-hidden">Nutzername</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Nutzername" required autofocus>
+        <br/>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Anmelden</button>
+        <p class="mt-5 mb-3">&copy; 2021</p>
+    </form>
+</main>
 
-                <div style="height: 50% !important; min-height: 50% !important;">
-                    <!-- List of currently online users. -->
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Teilnehmer</span>
-                        <a class="link-secondary" href="#" aria-label="Teilnehmer online">
-                            <span data-feather="plus-circle"></span>
-                        </a>
-                    </h6>
-                    <div style="overflow-y: auto; height:100%;">
-                        <ul class="nav flex-column" id="currentUserList"></ul>
-                    </div>
-                </div>
 
-                <hr/>
 
-                <div style="height: 50%;">
-                    <!-- Chatbox. -->
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Chat</span>
-                        <a class="link-secondary" href="#" aria-label="Chat">
-                            <span data-feather="plus-circle"></span>
-                        </a>
-                    </h6>
-                    <div class="chatbox" style="height: 50%;">
-                        <ul class="list-group list-group-flush" id="message-list">
-
-                        </ul>
-                    </div>
-                    <div class="info"></div>
-                    <div class="input-group">
-                        <input type="text" class="form-control form-control-sm" id="message"
-                               placeholder="Neue Nachricht">
-                        <div class="input-group-append">
-                            <button class="btn btn-sm btn-success" type="button" id="messageBtn">Senden</button>
-                        </div>
-                    </div>
-                    <div class="input-group">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button" id="afkButton">Abwesend</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-
-        <main class="col-md-10" style="height: 75%;">
-            <div class="row" style="width: 100%;">
-                <div class="justify-content-between align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Dashboard</h1>
-                </div>
-            </div>
-            <div class="row" style="height:100%; width: 100%;">
-                <div id="maincanvas" style="height:100%; display: block"></div>
-            </div>
-        </main>
-
-    </div>
-</div>
-
-<script src="../js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.0/socket.io.js"></script>
-<script src="/js/event.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"
-        integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
-        crossorigin="anonymous"></script>
-<script src="../js/dashboard.js"></script>
 </body>
 </html>
-

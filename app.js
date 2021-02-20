@@ -12,6 +12,8 @@
  */
 
 const express = require('express')
+const bodyParser = require('body-parser')
+const urlencodedParser = bodyParser.urlencoded({ extended: false })
 const socketio = require('socket.io')
 const app = express()
 const port = 3000
@@ -19,8 +21,14 @@ const port = 3000
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
+// Parse URL parameters.
 app.get('/', (req, res)=> {
     res.render('index')
+})
+
+app.post('/dashboard', urlencodedParser, function(req,res){
+    console.log("New Login with '" + req.body.username + "'")
+    res.render('room')
 })
 
 const server = app.listen(process.env.PORT || port, () => {
