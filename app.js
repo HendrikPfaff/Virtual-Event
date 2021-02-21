@@ -18,6 +18,8 @@ const socketio = require('socket.io')
 const app = express()
 const port = 3000
 
+
+
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
@@ -27,7 +29,7 @@ app.get('/', (req, res)=> {
 })
 
 app.post('/dashboard', urlencodedParser, function(req,res){
-    console.log("New Login with '" + req.body.username + "'")
+    console.log("New Login with '" + req.body.username + "' and " + req.body.avatarImg)
     res.render('room')
 })
 
@@ -48,20 +50,12 @@ const io = socketio(server, {
     }
 })*/
 
-// User handling.
-let currentUsersOnline = []
-
-class User{
-    constructor(username, img, positionX, positionY) {
-        this.username = username
-        this.avatarImg = img
-        this.avatarPositionX = positionX
-        this.avatarPositionY = positionY
-    }
-}
 
 // Welcome message.
 console.log("       .-._\n     .-| | |\n   _ | | | |__FRANKFURT\n ((__| | | | UNIVERSITY\n     OF APPLIED SCIENCES")
+
+// User handling.
+let currentUsersOnline = []
 
 io.on('connection', socket => {
 

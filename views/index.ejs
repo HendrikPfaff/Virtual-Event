@@ -6,11 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.79.0">
-    <title>Signin Template · Bootstrap v5.0</title>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
-
-
+    <title>b_free - Virtuelles Event login</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -45,12 +41,38 @@
         <label for="username" class="visually-hidden">Nutzername</label>
         <input type="text" id="username" name="username" class="form-control" placeholder="Nutzername" required autofocus>
         <br/>
+        <label class="fw-bold">Avatarfarbe</label>
+        <input type="hidden" name="avatarImg" id="avatarImg" value="../img/avatars/black.png">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="avatarFarbeDropDown" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="../img/avatars/black.png" id="avatarIndicator" style="height:1em;">&nbsp;<span id="selectedColor">Schwarz</span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#" data-avatar="../img/avatars/black.png" data-color="Schwarz"><img src="../img/avatars/black.png" style="height:1em;"> Schwarz</a></li>
+                <li><a class="dropdown-item" href="#" data-avatar="../img/avatars/brown.png" data-color="Braun"><img src="../img/avatars/brown.png" style="height:1em;"> Braun</a></li>
+                <li><a class="dropdown-item" href="#" data-avatar="../img/avatars/green.png" data-color="Grün"><img src="../img/avatars/green.png" style="height:1em;"> Grün</a></li>
+                <li><a class="dropdown-item" href="#" data-avatar="../img/avatars/grey.png" data-color="Grau"><img src="../img/avatars/grey.png" style="height:1em;"> Grau</a></li>
+                <li><a class="dropdown-item" href="#" data-avatar="../img/avatars/lime.png" data-color="Limette"><img src="../img/avatars/lime.png" style="height:1em;"> Limette</a></li>
+                <li><a class="dropdown-item" href="#" data-avatar="../img/avatars/magenta.png" data-color="Magenta"><img src="../img/avatars/magenta.png" style="height:1em;"> Magenta</a></li>
+                <li><a class="dropdown-item" href="#" data-avatar="../img/avatars/orange.png" data-color="Orange"><img src="../img/avatars/orange.png" style="height:1em;"> Orange</a></li>
+                <li><a class="dropdown-item" href="#" data-avatar="../img/avatars/pink.png" data-color="Pink"><img src="../img/avatars/pink.png" style="height:1em;"> Pink</a></li>
+                <li><a class="dropdown-item" href="#" data-avatar="../img/avatars/purple.png" data-color="Lila"><img src="../img/avatars/purple.png" style="height:1em;"> Lila</a></li>
+                <li><a class="dropdown-item" href="#" data-avatar="../img/avatars/red.png" data-color="Rot"><img src="../img/avatars/red.png" style="height:1em;"> Rot</a></li>
+                <li><a class="dropdown-item" href="#" data-avatar="../img/avatars/sand.png" data-color="Sand"><img src="../img/avatars/sand.png" style="height:1em;"> Sand</a></li>
+                <li><a class="dropdown-item" href="#" data-avatar="../img/avatars/turquoise.png" data-color="Türkis"><img src="../img/avatars/turquoise.png" style="height:1em;"> Türkis</a></li>
+                <li><a class="dropdown-item" href="#" data-avatar="../img/avatars/white.png" data-color="Weiss"><img src="../img/avatars/white.png" style="height:1em;"> Weiss</a></li>
+                <li><a class="dropdown-item" href="#" data-avatar="../img/avatars/yellow.png" data-color="Gelb"><img src="../img/avatars/yellow.png" style="height:1em;"> Gelb</a></li>
+            </ul>
+        </div>
+        <br/>
         <button class="w-100 btn btn-lg btn-primary" type="submit">Anmelden</button>
         <p class="mt-5 mb-3">&copy; 2021</p>
     </form>
 </main>
 
-
+<script src="../js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="../js/index.js"></script>
 
 </body>
 </html>
