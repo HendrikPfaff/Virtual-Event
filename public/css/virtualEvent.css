@@ -187,18 +187,22 @@ Chatbox
   width:100%;
 }
 
+#afkBody {
+  background-size: cover;
+}
+
 /**
  Canvas
  */
 .canvas {
   background-repeat: no-repeat !important;
   background-position: center center !important;
-  background-size:contain !important;
 }
 
 #maincanvas{
   margin:0;
   padding: 0;
+  background-size:contain !important;
 }
 
 /**

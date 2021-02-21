@@ -76,13 +76,12 @@ class RoomLink{
                 canvas.appendChild(logoMouseover)
             }
 
-            logo.addEventListener('mouseenter', e => {
+            logo.addEventListener('mouseover', e => {
                 e.preventDefault()
                 console.log("mouseenter")
 
                 if(moveAvatar){
-                    logo.style.backgroundColor = "red"
-                    console.log("avatar is over icon")
+                    window.location.href = this.link
                 }
 
                 if(this.mouseoverText !== ""){
@@ -93,14 +92,9 @@ class RoomLink{
 
             })
 
-            logo.addEventListener('mouseleave', e => {
+            logo.addEventListener('mouseout', e => {
                 e.preventDefault()
                 console.log("mouseleave")
-
-                if(moveAvatar){
-                    logo.style.backgroundColor = "green"
-                    console.log("avatar is not over icon anymore")
-                }
 
                 if(this.mouseoverText !== ""){
                     let tmp = document.getElementById(this.id+ "-mouseover")
@@ -175,19 +169,19 @@ class mediaFrame {
     let kinoRoom = new Room("kinoRoom", "Kino", "../img/backgrounds/kino.png", kinoElementList)
 
     let dashboardElementList = []
-    dashboardElementList.push(new RoomLink("acting", "", "#", "../img/icons/acting.svg", "Acting mouseover text",980, 740))
-    dashboardElementList.push(new RoomLink("barrier", "", "#", "../img/icons/barrier.svg", "",900, 680))
+    dashboardElementList.push(new RoomLink("acting", "Vorführung", "#", "../img/icons/acting.svg", "Acting mouseover text",980, 740))
+    dashboardElementList.push(new RoomLink("barrier", "Gedankenschranken", "#", "../img/icons/barrier.svg", "",900, 680))
     dashboardElementList.push(new RoomLink("building", "Partneruniversitäten", "#", "../img/icons/building.svg", "Stände der Partneruniversitäten",1275, 720))
-    dashboardElementList.push(new RoomLink("cinema", "Livestream", "#", "../img/icons/cinema.svg", "",  800, 500))
-    dashboardElementList.push(new RoomLink("conference", "", "#", "../img/icons/conferenceTable.png", "",  1160, 210))
+    dashboardElementList.push(new RoomLink("cinema", "Livestream", "/kino", "../img/icons/cinema.svg", "",  800, 500))
+    //dashboardElementList.push(new RoomLink("conference", "", "#", "../img/icons/conferenceTable.png", "",  1160, 210))
     dashboardElementList.push(new RoomLink("controller", "", "#", "../img/icons/controller.svg", "Controller text", 890, 300))
-    dashboardElementList.push(new RoomLink("meeting", "", "#", "../img/icons/meeting.svg", "", 1400, 550))
-    dashboardElementList.push(new RoomLink("headset", "", "#", "../img/icons/headset.svg", "", 1400, 430))
-    dashboardElementList.push(new RoomLink("lecture", "", "#", "../img/icons/lecture.svg", "", 1175, 750))
-    dashboardElementList.push(new RoomLink("living", "", "#", "../img/icons/livingRoom.png", "", 1300, 310))
+    dashboardElementList.push(new RoomLink("meeting", "Beratungsstellen", "/beratung", "../img/icons/meeting.svg", "Vereinbaren Sie Termine mit unseren Beratern", 1400, 550))
+    dashboardElementList.push(new RoomLink("headset", "Life Hilfstellung", "#", "../img/icons/headset.svg", "", 1400, 430))
+    dashboardElementList.push(new RoomLink("lecture", "Vortrag", "#", "../img/icons/lecture.svg", "", 1175, 750))
+    //dashboardElementList.push(new RoomLink("living", "", "#", "../img/icons/livingRoom.png", "", 1300, 310))
     dashboardElementList.push(new RoomLink("magnifier", "", "#", "../img/icons/magnifier.svg", "", 1400, 500))
-    dashboardElementList.push(new RoomLink("postit", "", "#", "../img/icons/postIt.svg", "", 1275, 250))
-    dashboardElementList.push(new RoomLink("projector", "", "#", "../img/icons/projector.svg", "", 960, 210))
+    dashboardElementList.push(new RoomLink("postit", "Schwarzes Brett", "#", "../img/icons/postIt.svg", "", 1275, 250))
+    dashboardElementList.push(new RoomLink("projector", "Videobericht", "#", "../img/icons/projector.svg", "", 960, 210))
     dashboardElementList.push(new RoomLink("theatre", "", "#", "../img/icons/theatre.svg", "", 810, 380))
     dashboardElementList.push(new RoomLink("world", "Weltcafé", "#", "../img/icons/world.svg", "", 1075, 760))
     let dashboardRoom = new Room("dashboard", "Dashboard", "../img/backgrounds/rondell.png", dashboardElementList)
@@ -204,8 +198,10 @@ class mediaFrame {
 
         // Tell server, who we are.
         socket.emit('userConnected', {user: currentUser})
-        renderBackground(dashboardRoom, maincanvas)
     })
+
+    let currentRoom = dashboardRoom
+    renderBackground(currentRoom, maincanvas)
 
     function renderBackground(room, canvas){
         console.log("Render Room " + room.id)
@@ -363,16 +359,14 @@ class mediaFrame {
     //})
 
     // Moving my avatar.
-    let body = document.querySelector('body')
     let currentPositionX = 0
     let currentPositionY = 0
-    //let moveAvatar = false
     maincanvas.addEventListener('mousemove', e => {
         currentPositionX = e.clientX
         currentPositionY = e.clientY
 
         if(moveAvatar){
-            //console.log('Position: ' + currentPositionX + "|" + currentPositionY)
+            console.log('Position: ' + currentPositionX + "|" + currentPositionY)
             myAvatar.style.left = currentPositionX + "px"
             myAvatar.style.top = currentPositionY + "px"
             socket.emit('avatarMoves', {uniqueId: currentUser.uniqueId, username: currentUser.username, positionX: currentPositionX, positionY: currentPositionY})
@@ -397,6 +391,12 @@ class mediaFrame {
         moveAvatar = true
     }
 
+    function avatarIsOverRoomLink(){
+
+
+        return false
+    }
+
     maincanvas.addEventListener('mouseup', e =>{
         //Only stop if exists
         if(mousedownId!=-1) {
@@ -404,6 +404,11 @@ class mediaFrame {
             mousedownId=-1;
         }
         moveAvatar = false
+
+        if(avatarIsOverRoomLink()){
+            console.log("enter room: ")
+        }
+
     })
 
     // Get the movement of other avatars.
@@ -414,7 +419,6 @@ class mediaFrame {
             avatar.style.left = data.positionX + "px"
             avatar.style.top = data.positionY + "px"
         }
-
     })
 
 })()

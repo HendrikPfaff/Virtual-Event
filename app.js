@@ -26,15 +26,19 @@ app.get('/', (req, res)=> {
     res.render('index')
 })
 
+let tmpRoom = "dashboard"
 app.get('/kino', (req, res) =>{
+    tmpRoom = "kino"
     res.render('room')
 })
 
 app.get('/vortrag', (req, res) =>{
+    tmpRoom = "vortrag"
     res.render('room')
 })
 
 app.get('/beratung', (req, res) =>{
+    tmpRoom = "beratung"
     res.render('room')
 })
 
