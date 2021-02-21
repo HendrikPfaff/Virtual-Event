@@ -51,10 +51,6 @@ class RoomLink{
         logo.appendChild(logoLabel)
         canvas.appendChild(logo)
 
-        logo.addEventListener('mouseover', e=>{
-            e.preventDefault()
-            console.log("overlap with " + this.label)
-        })
     }
 }
 
@@ -87,22 +83,42 @@ class mediaFrame {
     let socket = io.connect('localhost:3000', {
         withCredentials: true
     })
+
     // Make sure every username is unique for now.
-    let randomDelta = Math.floor(Math.random()*250)
+    let randomDelta
     // Get a random avatar.
-    let currentUser = new User(randomDelta, randomDelta, '../img/avatars/turquoise.png', (500 + randomDelta), (500 + randomDelta))
+    let currentUser
     let myAvatar = document.createElement('img')
     let maincanvas = document.querySelector('#maincanvas')
     let avatarList = []
     let roomElementList = []
-    roomElementList.push(new RoomLink("Kino", "#", "../img/icons/cinema.png", 600, 600))
-    roomElementList.push(new RoomLink("Lupe", "#", "../img/icons/magnifier.png", 500, 500))
+    roomElementList.push(new RoomLink("Acting", "#", "../img/icons/acting.png", 600, 600))
+    roomElementList.push(new RoomLink("Barrier", "#", "../img/icons/barrier.png", 500, 500))
+    roomElementList.push(new RoomLink("Building", "#", "../img/icons/building.png", 600, 500))
+    roomElementList.push(new RoomLink("Cinema", "#", "../img/icons/cinema.png", 700, 500))
+    roomElementList.push(new RoomLink("Conference", "#", "../img/icons/conferenceTable.png", 800, 500))
+    roomElementList.push(new RoomLink("Controller", "#", "../img/icons/controller.png", 900, 500))
+    roomElementList.push(new RoomLink("Discussion", "#", "../img/icons/discussion.png", 1000, 500))
+    roomElementList.push(new RoomLink("Headset", "#", "../img/icons/headset.png", 1100, 500))
+    roomElementList.push(new RoomLink("Lecture", "#", "../img/icons/lecture.png", 1200, 500))
+    roomElementList.push(new RoomLink("Living Room", "#", "../img/icons/livingRoom.png", 1300, 500))
+    roomElementList.push(new RoomLink("Magnifier", "#", "../img/icons/magnifier.png", 1400, 500))
+    roomElementList.push(new RoomLink("Post It", "#", "../img/icons/postIt.png", 1500, 500))
+    roomElementList.push(new RoomLink("Projector", "#", "../img/icons/projector.png", 1600, 500))
+    roomElementList.push(new RoomLink("Theater", "#", "../img/icons/theater.png", 1700, 500))
+    roomElementList.push(new RoomLink("World", "#", "../img/icons/world.png", 1800, 500))
     //roomElementList.push(new mediaFrame("https://google.de", 300, 300, 600, 300))
 
 
+    socket.on('login', data => {
+        console.log("loggedin with " + data.loginUsername + " and " + data.loginAvatar)
+        randomDelta = Math.floor(Math.random()*500)
+        currentUser = new User(randomDelta, data.loginUsername, data.loginAvatar, (500 + randomDelta), (500 + randomDelta))
 
-    // Tell server, who we are.
-    socket.emit('userConnected', {user: currentUser})
+        // Tell server, who we are.
+        socket.emit('userConnected', {user: currentUser})
+    })
+
 
     function renderBackground(room){
         maincanvas.style.background = 'url("../img/backgrounds/rondell.png")'
@@ -161,7 +177,6 @@ class mediaFrame {
         let avatarName = document.createElement('span')
         avatarName.innerHTML = item.username
         avatar.appendChild(avatarName)
-
 
         maincanvas.appendChild(avatar)
         console.log(avatar)
@@ -263,9 +278,11 @@ class mediaFrame {
 
     // User is afk.
     let afkButton = document.querySelector('#afkButton')
+    let afkBody = document.querySelector('#afkModalBody')
     afkButton.addEventListener('click', e =>{
         console.log(currentUser.username + " is afk")
-        //TODO: Open modal with bathroom
+        let tmp = new RoomLink("Magnifier", "#", "../img/icons/magnifier.png", 1400, 500)
+        tmp.showOn(afkBody)
     })
 
 

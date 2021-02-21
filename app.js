@@ -18,8 +18,6 @@ const socketio = require('socket.io')
 const app = express()
 const port = 3000
 
-
-
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
@@ -28,8 +26,13 @@ app.get('/', (req, res)=> {
     res.render('index')
 })
 
+
+let loginUsername = ""
+let loginAvatar = ""
 app.post('/dashboard', urlencodedParser, function(req,res){
     console.log("New Login with '" + req.body.username + "' and " + req.body.avatarImg)
+    loginUsername = req.body.username
+    loginAvatar = req.body.avatarImg
     res.render('room')
 })
 
@@ -58,6 +61,9 @@ console.log("       .-._\n     .-| | |\n   _ | | | |__FRANKFURT\n ((__| | | | UN
 let currentUsersOnline = []
 
 io.on('connection', socket => {
+
+    // Chosen login data.
+    socket.emit('login', {loginUsername: loginUsername, loginAvatar: loginAvatar})
 
     // Process new client.
     socket.on('userConnected', data => {
