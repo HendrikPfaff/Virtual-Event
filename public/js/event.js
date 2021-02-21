@@ -14,6 +14,9 @@
 // Welcome message.
 console.log("       .-._\n     .-| | |\n   _ | | | |__FRANKFURT\n ((__| | | | UNIVERSITY\n     OF APPLIED SCIENCES");
 
+// Global bool for avatar movement
+var moveAvatar;
+
 class User{
     constructor(uniqueId, username, img, positionX, positionY) {
         this.uniqueId = uniqueId
@@ -25,32 +28,90 @@ class User{
     }
 }
 
+class Room{
+    constructor(id, header, img, elements) {
+        this.id = id
+        this.header = header
+        this.img = img
+        this.elements = elements
+    }
+}
+
 class RoomLink{
-    constructor(label, link, img, positionX, positionY) {
+    constructor(id, label, link, img, mouseoverText, positionX, positionY) {
+        this.id = id
         this.label = label
         this.link = link
         this.img = img
+        this.mouseoverText = mouseoverText
         this.positionX = positionX
         this.positionY = positionY
     }
 
     showOn(canvas){
-        let logo = document.createElement('a')
-        logo.href = this.link
-        logo.classList.add('roomLink')
-        logo.style.top = this.positionY + "px"
-        logo.style.left = this.positionX + "px"
+        if(canvas !== null){
+            let logo = document.createElement('div')
+            logo.href = this.link
+            logo.classList.add('roomLink')
+            logo.style.top = this.positionY + "px"
+            logo.style.left = this.positionX + "px"
 
-        let logoImg = document.createElement('img')
-        logoImg.src = this.img
+            let logoImg = document.createElement('img')
+            logoImg.src = this.img
 
-        let logoLabel = document.createElement('span')
-        logoLabel.innerHTML = this.label
+            let logoLabel = document.createElement('span')
+            logoLabel.innerHTML = this.label
 
-        logo.appendChild(logoImg)
-        logo.appendChild(logoLabel)
-        canvas.appendChild(logo)
+            logo.appendChild(logoImg)
+            logo.appendChild(logoLabel)
 
+            if(this.mouseoverText !== ""){
+                let logoMouseover = document.createElement('div')
+                logoMouseover.innerHTML = this.mouseoverText
+                logoMouseover.id = this.id + "-mouseover"
+                logoMouseover.classList.add("mouseoverText")
+                logoMouseover.style.left = this.positionX + 0 + "px"
+                logoMouseover.style.top = this.positionY + 75 + "px"
+
+                canvas.appendChild(logoMouseover)
+            }
+
+            logo.addEventListener('mouseenter', e => {
+                e.preventDefault()
+                console.log("mouseenter")
+
+                if(moveAvatar){
+                    logo.style.backgroundColor = "red"
+                    console.log("avatar is over icon")
+                }
+
+                if(this.mouseoverText !== ""){
+                    let tmp = document.getElementById(this.id + "-mouseover")
+                    tmp.style.display = "block"
+                    console.log("show mouseover text of " + this.label)
+                }
+
+            })
+
+            logo.addEventListener('mouseleave', e => {
+                e.preventDefault()
+                console.log("mouseleave")
+
+                if(moveAvatar){
+                    logo.style.backgroundColor = "green"
+                    console.log("avatar is not over icon anymore")
+                }
+
+                if(this.mouseoverText !== ""){
+                    let tmp = document.getElementById(this.id+ "-mouseover")
+                    tmp.style.display = "none"
+                    console.log("close mouseover text of " + this.label)
+                }
+
+
+            })
+            canvas.appendChild(logo)
+        }
     }
 }
 
@@ -64,20 +125,24 @@ class mediaFrame {
     }
 
     showOn(canvas){
-        let frame = document.createElement('iframe')
-        frame.src = this.link
-        frame.referrerpolicy = "no-referrer"
-        frame.allowpaymentrequest = "false"
-        frame.loading = "eager"
-        frame.classList.add('mediaFrame')
-        frame.style.top = this.positionY + "px"
-        frame.style.left = this.positionX + "px"
-        frame.height = this.height
-        frame.width = this.width
+        if(canvas !== null){
+            let frame = document.createElement('iframe')
+            frame.src = this.link
+            frame.referrerpolicy = "no-referrer"
+            frame.allowpaymentrequest = "false"
+            frame.loading = "eager"
+            frame.classList.add('mediaFrame')
+            frame.style.top = this.positionY + "px"
+            frame.style.left = this.positionX + "px"
+            frame.height = this.height
+            frame.width = this.width
 
-        canvas.appendChild(frame)
+            canvas.appendChild(frame)
+        }
     }
 }
+
+
 
 (function connect(){
     let socket = io.connect('localhost:3000', {
@@ -91,50 +156,73 @@ class mediaFrame {
     let myAvatar = document.createElement('img')
     let maincanvas = document.querySelector('#maincanvas')
     let avatarList = []
-    let roomElementList = []
-    roomElementList.push(new RoomLink("Acting", "#", "../img/icons/acting.png", 600, 600))
-    roomElementList.push(new RoomLink("Barrier", "#", "../img/icons/barrier.png", 500, 500))
-    roomElementList.push(new RoomLink("Building", "#", "../img/icons/building.png", 600, 500))
-    roomElementList.push(new RoomLink("Cinema", "#", "../img/icons/cinema.png", 700, 500))
-    roomElementList.push(new RoomLink("Conference", "#", "../img/icons/conferenceTable.png", 800, 500))
-    roomElementList.push(new RoomLink("Controller", "#", "../img/icons/controller.png", 900, 500))
-    roomElementList.push(new RoomLink("Discussion", "#", "../img/icons/discussion.png", 1000, 500))
-    roomElementList.push(new RoomLink("Headset", "#", "../img/icons/headset.png", 1100, 500))
-    roomElementList.push(new RoomLink("Lecture", "#", "../img/icons/lecture.png", 1200, 500))
-    roomElementList.push(new RoomLink("Living Room", "#", "../img/icons/livingRoom.png", 1300, 500))
-    roomElementList.push(new RoomLink("Magnifier", "#", "../img/icons/magnifier.png", 1400, 500))
-    roomElementList.push(new RoomLink("Post It", "#", "../img/icons/postIt.png", 1500, 500))
-    roomElementList.push(new RoomLink("Projector", "#", "../img/icons/projector.png", 1600, 500))
-    roomElementList.push(new RoomLink("Theater", "#", "../img/icons/theater.png", 1700, 500))
-    roomElementList.push(new RoomLink("World", "#", "../img/icons/world.png", 1800, 500))
-    //roomElementList.push(new mediaFrame("https://google.de", 300, 300, 600, 300))
+
+
+    /*
+     * Init elements for afk modal at the beginning.
+     */
+    let afkBody = document.querySelector('#afkModalBody')
+    let afkElementList = []
+    afkElementList.push(new RoomLink("info", "", "#", "../img/icons/info.svg", "Hier kannst du eine kurze Verschnaufpause einlegen.<br/>Die anderen Teilnehmer sehen nicht, dass du hier bist.", 100, 35))
+    afkElementList.push(new RoomLink("duschen","", "#", "../img/icons/magnifier.svg", "Stell dir vor du bist über 80 Jahre alt, könntest du noch sicher alleine duschen?", 200, 300))
+    afkElementList.push(new RoomLink("toilette", "", "#", "../img/icons/magnifier.svg", "Stell dir vor du kannst nur noch auf einem Bein laufen, könntest du ohne Hilfe die Toilette benutzen?", 580, 400))
+    afkElementList.push(new RoomLink("waschbecken","", "#", "../img/icons/magnifier.svg", "Stell dir vor du benötigst einen Rollstuhl, könntest du dir ohne Probleme die Hände waschen und dich im Spiegel sehen?", 1100, 200))
+    let afkRoom = new Room("afkRoom", "Herzlich Wilkkomen im Abwesenheitsraum", '../img/backgrounds/WC.png', afkElementList)
+    renderBackground(afkRoom, afkBody)
+
+    let kinoElementList = []
+    kinoElementList.push(new mediaFrame("https://youtube.de", 650, 250, 800, 335))
+    let kinoRoom = new Room("kinoRoom", "Kino", "../img/backgrounds/kino.png", kinoElementList)
+
+    let dashboardElementList = []
+    dashboardElementList.push(new RoomLink("acting", "", "#", "../img/icons/acting.svg", "Acting mouseover text",980, 740))
+    dashboardElementList.push(new RoomLink("barrier", "", "#", "../img/icons/barrier.svg", "",900, 680))
+    dashboardElementList.push(new RoomLink("building", "Partneruniversitäten", "#", "../img/icons/building.svg", "Stände der Partneruniversitäten",1275, 720))
+    dashboardElementList.push(new RoomLink("cinema", "Livestream", "#", "../img/icons/cinema.svg", "",  800, 500))
+    dashboardElementList.push(new RoomLink("conference", "", "#", "../img/icons/conferenceTable.png", "",  1160, 210))
+    dashboardElementList.push(new RoomLink("controller", "", "#", "../img/icons/controller.svg", "Controller text", 890, 300))
+    dashboardElementList.push(new RoomLink("meeting", "", "#", "../img/icons/meeting.svg", "", 1400, 550))
+    dashboardElementList.push(new RoomLink("headset", "", "#", "../img/icons/headset.svg", "", 1400, 430))
+    dashboardElementList.push(new RoomLink("lecture", "", "#", "../img/icons/lecture.svg", "", 1175, 750))
+    dashboardElementList.push(new RoomLink("living", "", "#", "../img/icons/livingRoom.png", "", 1300, 310))
+    dashboardElementList.push(new RoomLink("magnifier", "", "#", "../img/icons/magnifier.svg", "", 1400, 500))
+    dashboardElementList.push(new RoomLink("postit", "", "#", "../img/icons/postIt.svg", "", 1275, 250))
+    dashboardElementList.push(new RoomLink("projector", "", "#", "../img/icons/projector.svg", "", 960, 210))
+    dashboardElementList.push(new RoomLink("theatre", "", "#", "../img/icons/theatre.svg", "", 810, 380))
+    dashboardElementList.push(new RoomLink("world", "Weltcafé", "#", "../img/icons/world.svg", "", 1075, 760))
+    let dashboardRoom = new Room("dashboard", "Dashboard", "../img/backgrounds/rondell.png", dashboardElementList)
+
+    let lindemannRoom = new Room("lindemann", "", "../img/backgrounds/lindemann.png", null)
+
+    let weltcafeRoom = new Room("weltcafe", "Welt Café", "../img/backgrounds/weltcafe.png", null)
 
 
     socket.on('login', data => {
         console.log("loggedin with " + data.loginUsername + " and " + data.loginAvatar)
         randomDelta = Math.floor(Math.random()*500)
-        currentUser = new User(randomDelta, data.loginUsername, data.loginAvatar, (500 + randomDelta), (500 + randomDelta))
+        currentUser = new User(randomDelta, data.loginUsername, data.loginAvatar, (250 + randomDelta), (250 + randomDelta))
 
         // Tell server, who we are.
         socket.emit('userConnected', {user: currentUser})
+        renderBackground(dashboardRoom, maincanvas)
     })
 
+    function renderBackground(room, canvas){
+        console.log("Render Room " + room.id)
+        //TODO: set header text.
 
-    function renderBackground(room){
-        maincanvas.style.background = 'url("../img/backgrounds/rondell.png")'
-        maincanvas.style.backgroundRepeat = 'no-repeat'
-        maincanvas.style.backgroundPosition = 'center center'
+        canvas.classList.add('canvas')
+        canvas.style.background = "url(" + room.img + ")"
 
-        console.log("background")
-    }
-    renderBackground()
-
-    function showElements(item, index){
-        item.showOn(maincanvas)
+        displayElements(room.elements, canvas)
     }
 
-    function displayRoomElements(){
-        roomElementList.forEach(showElements)
+    function displayElements(elementList, canvas){
+        if(elementList !== null){
+            for(let i = 0; i < elementList.length; i++){
+                elementList[i].showOn(canvas)
+            }
+        }
     }
 
     // Update the userlist.
@@ -192,12 +280,10 @@ class mediaFrame {
     socket.on('update', data => {
         console.log(data)
         userList.innerHTML = ""
-        maincanvas.innerHTML = ""
+        document.querySelectorAll('.avatar').forEach(e => e.remove());
         avatarList = []
         // Refresh the current users / avatars.
         data.onlineList.forEach(displayUser)
-
-        displayRoomElements()
     })
 
     // Message handling.
@@ -276,21 +362,11 @@ class mediaFrame {
     //    setTimeout(() => {info.textContent=''}, 2000)
     //})
 
-    // User is afk.
-    let afkButton = document.querySelector('#afkButton')
-    let afkBody = document.querySelector('#afkModalBody')
-    afkButton.addEventListener('click', e =>{
-        console.log(currentUser.username + " is afk")
-        let tmp = new RoomLink("Magnifier", "#", "../img/icons/magnifier.png", 1400, 500)
-        tmp.showOn(afkBody)
-    })
-
-
     // Moving my avatar.
     let body = document.querySelector('body')
     let currentPositionX = 0
     let currentPositionY = 0
-    let moveAvatar = false
+    //let moveAvatar = false
     maincanvas.addEventListener('mousemove', e => {
         currentPositionX = e.clientX
         currentPositionY = e.clientY
@@ -316,6 +392,7 @@ class mediaFrame {
         }
     })
 
+
     function whilemousedown(){
         moveAvatar = true
     }
@@ -332,7 +409,7 @@ class mediaFrame {
     // Get the movement of other avatars.
     socket.on('avatarMoves', data => {
         if(data.uniqueId !== currentUser.uniqueId){
-            console.log("Avatar of " + data.username + " moves to " + data.positionX + "|" + data.positionY)
+            //console.log("Avatar of " + data.username + " moves to " + data.positionX + "|" + data.positionY)
             let avatar = maincanvas.querySelector("[id='"+data.uniqueId+"'")
             avatar.style.left = data.positionX + "px"
             avatar.style.top = data.positionY + "px"

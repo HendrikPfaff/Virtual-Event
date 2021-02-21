@@ -26,6 +26,17 @@ app.get('/', (req, res)=> {
     res.render('index')
 })
 
+app.get('/kino', (req, res) =>{
+    res.render('room')
+})
+
+app.get('/vortrag', (req, res) =>{
+    res.render('room')
+})
+
+app.get('/beratung', (req, res) =>{
+    res.render('room')
+})
 
 let loginUsername = ""
 let loginAvatar = ""
@@ -36,12 +47,13 @@ app.post('/dashboard', urlencodedParser, function(req,res){
     res.render('room')
 })
 
+// Initialize server.
 const server = app.listen(process.env.PORT || port, () => {
     console.log("server is running\nCall localhost:" + port)
 })
 
 
-//initialize socket for the server
+// Initialize socket for the server.
 const io = socketio(server)
 
 /*
@@ -52,7 +64,6 @@ const io = socketio(server, {
         credentials: true
     }
 })*/
-
 
 // Welcome message.
 console.log("       .-._\n     .-| | |\n   _ | | | |__FRANKFURT\n ((__| | | | UNIVERSITY\n     OF APPLIED SCIENCES")

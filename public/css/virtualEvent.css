@@ -8,6 +8,9 @@ html, body {
 body {
   height: 100vh;
   width: 100vw;
+  /*height:950px;
+  width:1900px;*/
+  position: relative;
 }
 
 /* include border and padding in element width and height */
@@ -187,12 +190,15 @@ Chatbox
 /**
  Canvas
  */
+.canvas {
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size:contain !important;
+}
+
 #maincanvas{
   margin:0;
   padding: 0;
-  background:url('../img/backgrounds/rondell.png');
-  background-repeat: no-repeat;
-  background-position: center center;
 }
 
 /**
@@ -202,6 +208,7 @@ Chatbox
 .avatar {
   position: absolute;
   display: block;
+  z-index: 1;
 }
 
 .avatar img {
@@ -228,7 +235,11 @@ Chatbox
 .roomLink {
   position: absolute;
   display: block;
-  z-index: -1;
+  /*z-index: -1;*/
+}
+
+.roomLink:hover {
+
 }
 
 .roomLink img {
@@ -255,3 +266,12 @@ Chatbox
   border: 1px solid black;
 }
 
+.mouseoverText {
+  border: 2px solid black;
+  background-color: white;
+  padding: 5px;
+  display: none;
+  position: absolute;
+  max-width: 150px;
+  z-index: 2;
+}
