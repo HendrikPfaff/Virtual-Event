@@ -144,7 +144,7 @@ class mediaFrame {
         withCredentials: true
     })
      */
-    let socket = io.connect('bfree.herokuapp.com:3000', {
+    let socket = io.connect('https://bfree.herokuapp.com:3000', {
         withCredentials: true
     })
 
@@ -185,7 +185,7 @@ class mediaFrame {
     dashboardElementList.push(new RoomLink("lecture", "Vortrag", "#", "../img/icons/lecture.svg", "", 1175, 750))
     //dashboardElementList.push(new RoomLink("living", "", "#", "../img/icons/livingRoom.png", "", 1300, 310))
     dashboardElementList.push(new RoomLink("magnifier", "", "#", "../img/icons/magnifier.svg", "", 1400, 500))
-    dashboardElementList.push(new RoomLink("postit", "Schwarzes Brett", "#", "../img/icons/postIt.svg", "", 1275, 250))
+    dashboardElementList.push(new RoomLink("postit", "Schwarzes Brett", "#", "../img/icons/postit.svg", "", 1275, 250))
     dashboardElementList.push(new RoomLink("projector", "Videobericht", "#", "../img/icons/projector.svg", "", 960, 210))
     dashboardElementList.push(new RoomLink("theatre", "", "#", "../img/icons/theatre.svg", "", 810, 380))
     dashboardElementList.push(new RoomLink("world", "Weltcafé", "#", "../img/icons/world.svg", "", 1075, 760))
