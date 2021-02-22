@@ -58,16 +58,16 @@ const server = app.listen(process.env.PORT || port, () => {
 
 
 // Initialize socket for the server.
-const io = socketio(server)
+//const io = socketio(server)
 
-/*
+
 const io = socketio(server, {
     cors: {
         origin: "https://bfree.herokuapp.com/",
         methods: ["GET", "POST"],
         credentials: true
     }
-})*/
+})
 
 // Welcome message.
 console.log("       .-._\n     .-| | |\n   _ | | | |__FRANKFURT\n ((__| | | | UNIVERSITY\n     OF APPLIED SCIENCES")
