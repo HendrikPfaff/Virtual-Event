@@ -139,14 +139,15 @@ class mediaFrame {
 
 
 (function connect(){
-    /*
+
     let socket = io.connect('localhost:3000', {
         withCredentials: true
     })
-     */
+     /*
     let socket = io.connect('https://bfree.herokuapp.com:3000', {
         withCredentials: true
     })
+     */
 
     // Make sure every username is unique for now.
     let randomDelta
@@ -155,7 +156,6 @@ class mediaFrame {
     let myAvatar = document.createElement('img')
     let maincanvas = document.querySelector('#maincanvas')
     let avatarList = []
-
 
     /*
      * Init elements for afk modal at the beginning.
@@ -166,34 +166,40 @@ class mediaFrame {
     afkElementList.push(new RoomLink("duschen","", "#", "../img/icons/magnifier.svg", "Stell dir vor du bist über 80 Jahre alt, könntest du noch sicher alleine duschen?", 200, 300))
     afkElementList.push(new RoomLink("toilette", "", "#", "../img/icons/magnifier.svg", "Stell dir vor du kannst nur noch auf einem Bein laufen, könntest du ohne Hilfe die Toilette benutzen?", 580, 400))
     afkElementList.push(new RoomLink("waschbecken","", "#", "../img/icons/magnifier.svg", "Stell dir vor du benötigst einen Rollstuhl, könntest du dir ohne Probleme die Hände waschen und dich im Spiegel sehen?", 1100, 200))
-    let afkRoom = new Room("afkRoom", "Herzlich Wilkkomen im Abwesenheitsraum", '../img/backgrounds/WC.png', afkElementList)
+    let afkRoom = new Room("afkRoom", "", '../img/backgrounds/WC.png', afkElementList)
     renderBackground(afkRoom, afkBody)
 
     let kinoElementList = []
-    kinoElementList.push(new mediaFrame("https://youtube.de", 650, 250, 800, 335))
+    kinoElementList.push(new mediaFrame("https://www.youtube.com/embed/Y52d-qe1Mw4", 650, 250, 800, 335))
     let kinoRoom = new Room("kinoRoom", "Kino", "../img/backgrounds/kino.png", kinoElementList)
 
+
     let dashboardElementList = []
-    dashboardElementList.push(new RoomLink("acting", "Vorführung", "#", "../img/icons/acting.svg", "Acting mouseover text",980, 740))
-    dashboardElementList.push(new RoomLink("barrier", "Gedankenschranken", "#", "../img/icons/barrier.svg", "",900, 680))
-    dashboardElementList.push(new RoomLink("building", "Partneruniversitäten", "#", "../img/icons/building.svg", "Stände der Partneruniversitäten",1275, 720))
-    dashboardElementList.push(new RoomLink("cinema", "Livestream", "/kino", "../img/icons/cinema.svg", "",  800, 500))
-    //dashboardElementList.push(new RoomLink("conference", "", "#", "../img/icons/conferenceTable.png", "",  1160, 210))
-    dashboardElementList.push(new RoomLink("controller", "", "#", "../img/icons/controller.svg", "Controller text", 890, 300))
-    dashboardElementList.push(new RoomLink("meeting", "Beratungsstellen", "/beratung", "../img/icons/meeting.svg", "Vereinbaren Sie Termine mit unseren Beratern", 1400, 550))
-    dashboardElementList.push(new RoomLink("headset", "Life Hilfstellung", "#", "../img/icons/headset.svg", "", 1400, 430))
-    dashboardElementList.push(new RoomLink("lecture", "Vortrag", "#", "../img/icons/lecture.svg", "", 1175, 750))
-    //dashboardElementList.push(new RoomLink("living", "", "#", "../img/icons/livingRoom.png", "", 1300, 310))
-    dashboardElementList.push(new RoomLink("magnifier", "", "#", "../img/icons/magnifier.svg", "", 1400, 500))
-    dashboardElementList.push(new RoomLink("postit", "Schwarzes Brett", "#", "../img/icons/postit.svg", "", 1275, 250))
-    dashboardElementList.push(new RoomLink("projector", "Videobericht", "#", "../img/icons/projector.svg", "", 960, 210))
-    dashboardElementList.push(new RoomLink("theatre", "", "#", "../img/icons/theatre.svg", "", 810, 380))
-    dashboardElementList.push(new RoomLink("world", "Weltcafé", "#", "../img/icons/world.svg", "", 1075, 760))
-    let dashboardRoom = new Room("dashboard", "Dashboard", "../img/backgrounds/rondell.png", dashboardElementList)
+    dashboardElementList.push(new RoomLink("acting", "Improtheater", "#", "../img/icons/acting.svg", "Acting mouseover text",980, 755))
+    dashboardElementList.push(new RoomLink("barrier", "Gedankenschranken", "#", "../img/icons/barrier.svg", "",880, 710))
+    dashboardElementList.push(new RoomLink("building", "Partneruniversitäten", "#", "../img/icons/building.svg", "Stände der Partneruniversitäten",1260, 740))
+    dashboardElementList.push(new RoomLink("lindemann", "Frau Hoene-Lindemann", "/beratung", "../img/icons/talk.png", "",  800, 520))
+    dashboardElementList.push(new RoomLink("hummel", "Frau Hummel", "#", "../img/icons/talk.png", "",  850, 610))
+    dashboardElementList.push(new RoomLink("conference", "Runder Tisch", "#", "../img/icons/desk.svg", "",  1170, 230))
+    dashboardElementList.push(new RoomLink("controller", "Onlinespiele", "#", "../img/icons/controller.svg", "Controller text", 890, 330))
+    dashboardElementList.push(new RoomLink("meeting", "Tandempartnerschaften", "/beratung", "../img/icons/meeting.svg", "", 1350, 570))
+    dashboardElementList.push(new RoomLink("headset", "IT-Abteilung", "#", "../img/icons/headset.svg", "", 1400, 460))
+    dashboardElementList.push(new RoomLink("universalDesign", "Universal Design", "#", "../img/icons/lecture.svg", "", 1330, 670))
+    dashboardElementList.push(new RoomLink("workshops", "Workshops", "#", "../img/icons/lecture.svg", "", 1200, 800))
+    dashboardElementList.push(new RoomLink("living", "Emotionale Räume", "#", "../img/icons/living.png", "", 1330, 360))
+    dashboardElementList.push(new RoomLink("sticker", "Sticker Aktion", "#", "../img/icons/postit.svg", "", 1275, 270))
+    dashboardElementList.push(new RoomLink("projector", "Kinosaal", "/kino", "../img/icons/projector.svg", "", 970, 250))
+    dashboardElementList.push(new RoomLink("theatre", "Vortragsraum", "#", "../img/icons/theatre.svg", "", 830, 410))
+    dashboardElementList.push(new RoomLink("world", "Welt-Café", "/weltcafe", "../img/icons/world.svg", "", 1075, 790))
+    let dashboardRoom = new Room("dashboard", "Hauptraum", "../img/backgrounds/rondell.png", dashboardElementList)
 
-    let lindemannRoom = new Room("lindemann", "", "../img/backgrounds/lindemann.png", null)
+    let beratungElementList = []
+    beratungElementList.push(new RoomLink("lifeChat", "", "#", "../img/icons/magnifier.svg", "Live-Chat mit Fraue Hoene-Lindemann beitreten", 1150, 525))
+    beratungElementList.push(new RoomLink("site", "", "#", "../img/icons/magnifier.svg", "", 800, 500))
+    beratungElementList.push(new RoomLink("contact", "", "#", "../img/icons/magnifier.svg", "Weitere Kontaktmöglichkeiten", 1400, 500))
+    let beratungRoom = new Room("lindemann", "Beratung", "../img/backgrounds/lindemann.png", beratungElementList)
 
-    let weltcafeRoom = new Room("weltcafe", "Welt Café", "../img/backgrounds/weltcafe.png", null)
+    let weltcafeRoom = new Room("weltcafe", "Welt-Café", "../img/backgrounds/weltcafe.png", null)
 
 
     socket.on('login', data => {
@@ -210,7 +216,8 @@ class mediaFrame {
 
     function renderBackground(room, canvas){
         console.log("Render Room " + room.id)
-        //TODO: set header text.
+        let header = document.querySelector('#roomHeader')
+        header.innerHTML = room.header
 
         canvas.classList.add('canvas')
         canvas.style.background = "url(" + room.img + ")"
@@ -358,10 +365,10 @@ class mediaFrame {
         }
     })
 
-    //socket.on('typing', data => {
-    //    info.textContent = data.username + " is typing..."
-    //    setTimeout(() => {info.textContent=''}, 2000)
-    //})
+    socket.on('typing', data => {
+        info.textContent = data.username + " tippt grade..."
+        setTimeout(() => {info.textContent=''}, 2000)
+    })
 
     // Moving my avatar.
     let currentPositionX = 0
@@ -396,12 +403,6 @@ class mediaFrame {
         moveAvatar = true
     }
 
-    function avatarIsOverRoomLink(){
-
-
-        return false
-    }
-
     maincanvas.addEventListener('mouseup', e =>{
         //Only stop if exists
         if(mousedownId!=-1) {
@@ -409,11 +410,6 @@ class mediaFrame {
             mousedownId=-1;
         }
         moveAvatar = false
-
-        if(avatarIsOverRoomLink()){
-            console.log("enter room: ")
-        }
-
     })
 
     // Get the movement of other avatars.
