@@ -15,7 +15,26 @@
 console.log("       .-._\n     .-| | |\n   _ | | | |__FRANKFURT\n ((__| | | | UNIVERSITY\n     OF APPLIED SCIENCES");
 
 // Global bool for avatar movement
-var moveAvatar;
+var moveAvatar = false;
+var maincanvas = document.querySelector('#maincanvas')
+function renderBackground(room, canvas){
+    console.log("Render Room " + room.id)
+    let header = document.querySelector('#roomHeader')
+    header.innerHTML = room.header
+
+    canvas.classList.add('canvas')
+    canvas.style.background = "url(" + room.img + ")"
+
+    displayElements(room.elements, canvas)
+}
+
+function displayElements(elementList, canvas){
+    if(elementList !== null){
+        for(let i = 0; i < elementList.length; i++){
+            elementList[i].showOn(canvas)
+        }
+    }
+}
 
 class User{
     constructor(uniqueId, username, img, positionX, positionY) {
@@ -81,7 +100,17 @@ class RoomLink{
                 console.log("mouseenter")
 
                 if(moveAvatar){
-                    window.location.href = this.link
+                    if(this.link == "/kino"){
+                        document.location.href = "/kino"
+                    } else if(this.link == "/beratung"){
+                        document.location.href="/beratung"
+                    } else if(this.link == "/weltcafe"){
+                        document.location.href="/weltcafe"
+                    } else if(this.link == "/dashboard") {
+                        document.location.href="/dashboard"
+                    }
+
+                    console.log("enter room " + this.link)
                 }
 
                 if(this.mouseoverText !== ""){
@@ -138,6 +167,7 @@ class mediaFrame {
 
 
 
+
 (function connect(){
 
     let socket = io.connect('localhost:3000', {
@@ -154,16 +184,17 @@ class mediaFrame {
     // Get a random avatar.
     let currentUser
     let myAvatar = document.createElement('img')
-    let maincanvas = document.querySelector('#maincanvas')
+
     let avatarList = []
 
+
     /*
-     * Init elements for afk modal at the beginning.
-     */
+         * Init elements for afk modal at the beginning.
+         */
     let afkBody = document.querySelector('#afkModalBody')
     let afkElementList = []
     afkElementList.push(new RoomLink("info", "", "#", "../img/icons/info.svg", "Hier kannst du eine kurze Verschnaufpause einlegen.<br/>Die anderen Teilnehmer sehen nicht, dass du hier bist.", 100, 35))
-    afkElementList.push(new RoomLink("duschen","", "#", "../img/icons/magnifier.svg", "Stell dir vor du bist über 80 Jahre alt, könntest du noch sicher alleine duschen?", 200, 300))
+    afkElementList.push(new RoomLink("duschen","", "#", "../img/icons/magnifier.svg", "Stell dir vor du bist über 80 Jahre alt, könntest du noch sicher alleine duschen?", 100, 300))
     afkElementList.push(new RoomLink("toilette", "", "#", "../img/icons/magnifier.svg", "Stell dir vor du kannst nur noch auf einem Bein laufen, könntest du ohne Hilfe die Toilette benutzen?", 580, 400))
     afkElementList.push(new RoomLink("waschbecken","", "#", "../img/icons/magnifier.svg", "Stell dir vor du benötigst einen Rollstuhl, könntest du dir ohne Probleme die Hände waschen und dich im Spiegel sehen?", 1100, 200))
     let afkRoom = new Room("afkRoom", "", '../img/backgrounds/WC.png', afkElementList)
@@ -202,6 +233,9 @@ class mediaFrame {
     let weltcafeRoom = new Room("weltcafe", "Welt-Café", "../img/backgrounds/weltcafe.png", null)
 
 
+
+
+
     socket.on('login', data => {
         console.log("loggedin with " + data.loginUsername + " and " + data.loginAvatar)
         randomDelta = Math.floor(Math.random()*500)
@@ -211,27 +245,27 @@ class mediaFrame {
         socket.emit('userConnected', {user: currentUser})
     })
 
+    let param = window.location.href.split("/")
+    let room = param[3]
+    console.log("param = " + room)
     let currentRoom = dashboardRoom
+    if(room == "kino"){
+        currentRoom = kinoRoom
+    } else if(room == "weltcafe") {
+        currentRoom = weltcafeRoom
+    } else if(room == "beratung"){
+        currentRoom = beratungRoom
+    } else {
+        currentRoom = dashboardRoom
+    }
+
     renderBackground(currentRoom, maincanvas)
 
-    function renderBackground(room, canvas){
-        console.log("Render Room " + room.id)
-        let header = document.querySelector('#roomHeader')
-        header.innerHTML = room.header
-
-        canvas.classList.add('canvas')
-        canvas.style.background = "url(" + room.img + ")"
-
-        displayElements(room.elements, canvas)
+    if(currentRoom !== dashboardRoom){
+        let door = new RoomLink("back", "Zurück zum Hauptraum", "/dashboard", "../img/icons/door.svg", "", 320, 150)
+        door.showOn(maincanvas)
     }
 
-    function displayElements(elementList, canvas){
-        if(elementList !== null){
-            for(let i = 0; i < elementList.length; i++){
-                elementList[i].showOn(canvas)
-            }
-        }
-    }
 
     // Update the userlist.
     let userList = document.querySelector('#currentUserList')

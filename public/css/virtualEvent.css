@@ -222,14 +222,14 @@ Chatbox
 }
 
 .avatar span {
-  color: white;
+  color: black;
   display:block;
   margin:auto;
   text-align: center;
-  text-shadow: -1px 1px 0 #000,
-                1px 1px 0 #000,
-                1px -1px 0 #000,
-               -1px -1px 0 #000;
+  text-shadow: -1px 1px 0 #fff,
+                1px 1px 0 #fff,
+                1px -1px 0 #fff,
+               -1px -1px 0 #fff;
 }
 
 /**
@@ -253,16 +253,16 @@ Chatbox
 }
 
 .roomLink span {
-  color: white;
+  color: black;
   margin: auto;
   display: block;
   text-align: center;
   text-decoration: none;
 
-  text-shadow: -1px 1px 0 #000,
-  1px 1px 0 #000,
-  1px -1px 0 #000,
-  -1px -1px 0 #000;
+  text-shadow: -1px 1px 0 #fff,
+  1px 1px 0 #fff,
+  1px -1px 0 #fff,
+  -1px -1px 0 #fff;
 }
 
 .mediaFrame {

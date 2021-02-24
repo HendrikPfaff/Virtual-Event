@@ -42,6 +42,17 @@ app.get('/beratung', (req, res) =>{
     res.render('room')
 })
 
+app.get('/weltcafe', (req, res) =>{
+    tmpRoom = "weltcafe"
+    res.render('room')
+})
+
+app.get('/dashboard', (req, res) =>{
+    tmpRoom = "dashboard"
+    res.render('room')
+})
+
+
 let loginUsername = ""
 let loginAvatar = ""
 app.post('/dashboard', urlencodedParser, function(req,res){

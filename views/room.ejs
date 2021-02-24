@@ -176,9 +176,16 @@
 <script>
     $(document).ready(function(){
 
-        $('#welcomeModal').modal('show')
+        let url = window.location.href.split("/")
+        let room = url[3]
+        if(room == "dashboard" && document.cookie != "welcome"){
+            $('#welcomeModal').modal('show')
+            document.cookie = "welcome";
+        }
+
 
         $('#afkButton').click(function(e){
+
             $('#afkModal').modal('show')
         })
 
