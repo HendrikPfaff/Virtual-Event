@@ -172,14 +172,17 @@ class mediaFrame {
 
 (function connect(){
 
+    /*
     let socket = io.connect('localhost:3000', {
         withCredentials: true
     })
-     /*
+    */
+
+
     let socket = io.connect('https://bfree.herokuapp.com:3000', {
         withCredentials: true
     })
-     */
+
 
     // Make sure every username is unique for now.
     let randomDelta
