@@ -209,11 +209,11 @@ class mediaFrame {
 
     let dashboardElementList = []
     dashboardElementList.push(new RoomLink("acting", "Improtheater", "#", "../img/icons/acting.svg", "Acting mouseover text",980, 755))
-    dashboardElementList.push(new RoomLink("barrier", "Gedankenschranken", "#", "../img/icons/barrier.svg", "",880, 710))
+    dashboardElementList.push(new RoomLink("barrier", "Gedankenschranken", "#", "../img/icons/barrier.svg", "Ausstellung: Gedankenschranken",880, 710))
     dashboardElementList.push(new RoomLink("building", "Partneruniversitäten", "#", "../img/icons/building.svg", "Stände der Partneruniversitäten",1260, 740))
-    dashboardElementList.push(new RoomLink("lindemann", "Frau Hoene-Lindemann", "/beratung", "../img/icons/talk.png", "",  800, 520))
-    dashboardElementList.push(new RoomLink("hummel", "Frau Hummel", "#", "../img/icons/talk.png", "",  850, 610))
-    dashboardElementList.push(new RoomLink("conference", "Runder Tisch", "#", "../img/icons/desk.svg", "",  1170, 230))
+    dashboardElementList.push(new RoomLink("lindemann", "Frau Hoene-Lindemann", "/beratung", "../img/icons/talk.png", "Beratungsstelle von Frau Hoene-Lindemann",  800, 520))
+    dashboardElementList.push(new RoomLink("hummel", "Frau Hummel", "#", "../img/icons/talk.png", "Beratungsstelle von Frau Hummel",  850, 610))
+    dashboardElementList.push(new RoomLink("conference", "Runder Tisch", "#", "../img/icons/desk.svg", "Austausch am runden Tisch",  1170, 230))
     dashboardElementList.push(new RoomLink("controller", "Onlinespiele", "#", "../img/icons/controller.svg", "Controller text", 890, 330))
     dashboardElementList.push(new RoomLink("meeting", "Tandempartnerschaften", "/beratung", "../img/icons/meeting.svg", "", 1350, 570))
     dashboardElementList.push(new RoomLink("headset", "IT-Abteilung", "#", "../img/icons/headset.svg", "", 1400, 460))
@@ -229,7 +229,7 @@ class mediaFrame {
     let beratungElementList = []
     beratungElementList.push(new RoomLink("lifeChat", "", "#", "../img/icons/magnifier.svg", "Live-Chat mit Frau Hoene-Lindemann beitreten", 1175, 525))
     beratungElementList.push(new RoomLink("site", "", "#", "../img/icons/magnifier.svg", "Lebenslauf von Frau Hoen-Lindemann", 970, 490))
-    beratungElementList.push(new RoomLink("contact", "", "#", "../img/icons/magnifier.svg", "Weitere Kontaktmöglichkeiten", 1400, 500))
+    beratungElementList.push(new RoomLink("contact", "", "#", "../img/icons/magnifier.svg", "Weitere Kontaktmöglichkeiten: <a href='https://www.frankfurt-university.de/de/erweiterungen/ansprechpartner/detail/alexandra-hoene-lindemann/?no_cache=1' target='_blank''>Hier</a>", 1400, 500))
     beratungElementList.push(new RoomLink("lindemannInfo", "", "#", "../img/icons/magnifier.svg", "Info-Broschüren, ausgewählt von Frau Hoene-Lindemann.", 1250, 630))
     let beratungRoom = new Room("lindemann", "Beratung", "../img/backgrounds/lindemann.png", beratungElementList)
 

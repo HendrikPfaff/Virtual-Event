@@ -12,6 +12,7 @@
  */
 
 const express = require('express')
+const cors = require('cors')
 const bodyParser = require('body-parser')
 const urlencodedParser = bodyParser.urlencoded({ extended: false })
 const socketio = require('socket.io')
@@ -72,19 +73,16 @@ const server = app.listen(process.env.PORT || port, () => {
     console.log("server is running\nCall localhost:" + port)
 })
 
+const corsOptions = {
+    origin: ["https://bfree.herokuapp.com/", "localhost:3000"],
+        methods: ["GET", "POST"],
+    credentials: true
+}
+app.use(cors(corsOptions))
 
 // Initialize socket for the server.
-const io = socketio(server)
+const io = socketio(server, )
 
-/*
-const io = socketio(server, {
-    cors: {
-        origin: "https://bfree.herokuapp.com/",
-        methods: ["GET", "POST"],
-        credentials: true
-    }
-})
-*/
 
 // Welcome message.
 console.log("       .-._\n     .-| | |\n   _ | | | |__FRANKFURT\n ((__| | | | UNIVERSITY\n     OF APPLIED SCIENCES")
