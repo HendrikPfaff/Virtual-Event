@@ -108,6 +108,8 @@ class RoomLink{
                         document.location.href="/weltcafe"
                     } else if(this.link == "/dashboard") {
                         document.location.href="/dashboard"
+                    } else if(this.link == "/vortragsraum"){
+                        document.location.href="/vortragsraum"
                     }
 
                     console.log("enter room " + this.link)
@@ -220,17 +222,21 @@ class mediaFrame {
     dashboardElementList.push(new RoomLink("living", "Emotionale Räume", "#", "../img/icons/living.png", "", 1330, 360))
     dashboardElementList.push(new RoomLink("sticker", "Sticker Aktion", "#", "../img/icons/postit.svg", "", 1275, 270))
     dashboardElementList.push(new RoomLink("projector", "Kinosaal", "/kino", "../img/icons/projector.svg", "", 970, 250))
-    dashboardElementList.push(new RoomLink("theatre", "Vortragsraum", "#", "../img/icons/theatre.svg", "", 830, 410))
+    dashboardElementList.push(new RoomLink("theatre", "Vortragsraum", "/vortragsraum", "../img/icons/theatre.svg", "", 830, 410))
     dashboardElementList.push(new RoomLink("world", "Welt-Café", "/weltcafe", "../img/icons/world.svg", "", 1075, 790))
     let dashboardRoom = new Room("dashboard", "Hauptraum", "../img/backgrounds/rondell.png", dashboardElementList)
 
     let beratungElementList = []
-    beratungElementList.push(new RoomLink("lifeChat", "", "#", "../img/icons/magnifier.svg", "Live-Chat mit Fraue Hoene-Lindemann beitreten", 1150, 525))
-    beratungElementList.push(new RoomLink("site", "", "#", "../img/icons/magnifier.svg", "", 800, 500))
+    beratungElementList.push(new RoomLink("lifeChat", "", "#", "../img/icons/magnifier.svg", "Live-Chat mit Frau Hoene-Lindemann beitreten", 1175, 525))
+    beratungElementList.push(new RoomLink("site", "", "#", "../img/icons/magnifier.svg", "Lebenslauf von Frau Hoen-Lindemann", 970, 490))
     beratungElementList.push(new RoomLink("contact", "", "#", "../img/icons/magnifier.svg", "Weitere Kontaktmöglichkeiten", 1400, 500))
+    beratungElementList.push(new RoomLink("lindemannInfo", "", "#", "../img/icons/magnifier.svg", "Info-Broschüren, ausgewählt von Frau Hoene-Lindemann.", 1250, 630))
     let beratungRoom = new Room("lindemann", "Beratung", "../img/backgrounds/lindemann.png", beratungElementList)
 
+    let vortragsraum = new Room("vortrag", "Vortragsraum", "../img/backgrounds/vortragsraum.png", null)
+
     let weltcafeRoom = new Room("weltcafe", "Welt-Café", "../img/backgrounds/weltcafe.png", null)
+
 
 
 
@@ -253,8 +259,10 @@ class mediaFrame {
         currentRoom = kinoRoom
     } else if(room == "weltcafe") {
         currentRoom = weltcafeRoom
-    } else if(room == "beratung"){
+    } else if(room == "beratung") {
         currentRoom = beratungRoom
+    } else if(room == "vortragsraum"){
+        currentRoom = vortragsraum
     } else {
         currentRoom = dashboardRoom
     }

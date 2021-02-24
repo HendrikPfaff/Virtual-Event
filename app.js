@@ -47,6 +47,11 @@ app.get('/weltcafe', (req, res) =>{
     res.render('room')
 })
 
+app.get('/vortragsraum', (req, res) =>{
+    tmpRoom = "vortragsraum"
+    res.render('room')
+})
+
 app.get('/dashboard', (req, res) =>{
     tmpRoom = "dashboard"
     res.render('room')
