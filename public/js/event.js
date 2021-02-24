@@ -179,7 +179,7 @@ class mediaFrame {
     */
 
 
-    let socket = io.connect('https://bfree.herokuapp.com:3000', {
+    let socket = io.connect(['https://bfree.herokuapp.com:3000', "localhost:3000"], {
         withCredentials: true
     })
 
