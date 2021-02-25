@@ -37,11 +37,12 @@ function displayElements(elementList, canvas){
 }
 
 class User{
-    constructor(uniqueId, username, img, positionX, positionY) {
+    constructor(uniqueId, username, img, currentRoom, positionX, positionY) {
         this.uniqueId = uniqueId
         this.username = username
         this.avatarImg = img
         this.avatarHeight = 50
+        this.currentRoom = currentRoom
         this.avatarPositionX = positionX
         this.avatarPositionY = positionY
     }
@@ -168,16 +169,7 @@ class mediaFrame {
 }
 
 
-
-
 (function connect(){
-
-    /*
-    let socket = io.connect('localhost:3000', {
-        withCredentials: true
-    })
-    */
-
 
     let socket = io.connect(['https://bfree.herokuapp.com:3000', "localhost:3000"], {
         withCredentials: true
@@ -211,22 +203,22 @@ class mediaFrame {
 
 
     let dashboardElementList = []
-    dashboardElementList.push(new RoomLink("acting", "Improtheater", "#", "../img/icons/acting.svg", "Acting mouseover text",980, 755))
+    dashboardElementList.push(new RoomLink("acting", "Improtheater", "#", "../img/icons/acting.svg", "Improvisationstheater",980, 755))
     dashboardElementList.push(new RoomLink("barrier", "Gedankenschranken", "#", "../img/icons/barrier.svg", "Ausstellung: Gedankenschranken",880, 710))
     dashboardElementList.push(new RoomLink("building", "Partneruniversitäten", "#", "../img/icons/building.svg", "Stände der Partneruniversitäten",1260, 740))
     dashboardElementList.push(new RoomLink("lindemann", "Frau Hoene-Lindemann", "/beratung", "../img/icons/talk.png", "Beratungsstelle von Frau Hoene-Lindemann",  800, 520))
     dashboardElementList.push(new RoomLink("hummel", "Frau Hummel", "#", "../img/icons/talk.png", "Beratungsstelle von Frau Hummel",  850, 610))
     dashboardElementList.push(new RoomLink("conference", "Runder Tisch", "#", "../img/icons/desk.svg", "Austausch am runden Tisch",  1170, 230))
-    dashboardElementList.push(new RoomLink("controller", "Onlinespiele", "#", "../img/icons/controller.svg", "Controller text", 890, 330))
-    dashboardElementList.push(new RoomLink("meeting", "Tandempartnerschaften", "/beratung", "../img/icons/meeting.svg", "", 1350, 570))
-    dashboardElementList.push(new RoomLink("headset", "IT-Abteilung", "#", "../img/icons/headset.svg", "", 1400, 460))
-    dashboardElementList.push(new RoomLink("universalDesign", "Universal Design", "#", "../img/icons/lecture.svg", "", 1330, 670))
-    dashboardElementList.push(new RoomLink("workshops", "Workshops", "#", "../img/icons/lecture.svg", "", 1200, 800))
-    dashboardElementList.push(new RoomLink("living", "Emotionale Räume", "#", "../img/icons/living.png", "", 1330, 360))
+    dashboardElementList.push(new RoomLink("controller", "Onlinespiele", "#", "../img/icons/controller.svg", "Witzige Spiele online", 890, 330))
+    dashboardElementList.push(new RoomLink("meeting", "Tandempartnerschaften", "#", "../img/icons/meeting.svg", "Informationen zu Tandempartnerschaften", 1350, 570))
+    dashboardElementList.push(new RoomLink("headset", "IT-Abteilung", "#", "../img/icons/headset.svg", "Beratung von der IT-Abteilung", 1400, 460))
+    dashboardElementList.push(new RoomLink("universalDesign", "Universal Design", "#", "../img/icons/lecture.svg", "Ausstellung: Universal Design", 1330, 670))
+    dashboardElementList.push(new RoomLink("workshops", "Workshops", "#", "../img/icons/lecture.svg", "Aktuelle Workhops: -", 1200, 800))
+    dashboardElementList.push(new RoomLink("living", "Emotionale Räume", "#", "../img/icons/living.png", "Ausstellung: Emotionale Räume", 1330, 360))
     dashboardElementList.push(new RoomLink("sticker", "Sticker Aktion", "#", "../img/icons/postit.svg", "", 1275, 270))
-    dashboardElementList.push(new RoomLink("projector", "Kinosaal", "/kino", "../img/icons/projector.svg", "", 970, 250))
-    dashboardElementList.push(new RoomLink("theatre", "Vortragsraum", "/vortragsraum", "../img/icons/theatre.svg", "", 830, 410))
-    dashboardElementList.push(new RoomLink("world", "Welt-Café", "/weltcafe", "../img/icons/world.svg", "", 1075, 790))
+    dashboardElementList.push(new RoomLink("projector", "Kinosaal", "/kino", "../img/icons/projector.svg", "Gemeinsam Filme schauen", 970, 250))
+    dashboardElementList.push(new RoomLink("theatre", "Vortragsraum", "/vortragsraum", "../img/icons/theatre.svg", "Live Vorträge", 830, 410))
+    dashboardElementList.push(new RoomLink("world", "Welt-Café", "/weltcafe", "../img/icons/world.svg", "Austausch im Weltcafé", 1075, 790))
     let dashboardRoom = new Room("dashboard", "Hauptraum", "../img/backgrounds/rondell.png", dashboardElementList)
 
     let beratungElementList = []
@@ -240,19 +232,6 @@ class mediaFrame {
 
     let weltcafeRoom = new Room("weltcafe", "Welt-Café", "../img/backgrounds/weltcafe.png", null)
 
-
-
-
-
-
-    socket.on('login', data => {
-        console.log("loggedin with " + data.loginUsername + " and " + data.loginAvatar)
-        randomDelta = Math.floor(Math.random()*500)
-        currentUser = new User(randomDelta, data.loginUsername, data.loginAvatar, (250 + randomDelta), (250 + randomDelta))
-
-        // Tell server, who we are.
-        socket.emit('userConnected', {user: currentUser})
-    })
 
     let param = window.location.href.split("/")
     let room = param[3]
@@ -270,6 +249,7 @@ class mediaFrame {
         currentRoom = dashboardRoom
     }
 
+
     renderBackground(currentRoom, maincanvas)
 
     if(currentRoom !== dashboardRoom){
@@ -277,51 +257,65 @@ class mediaFrame {
         door.showOn(maincanvas)
     }
 
+    socket.on('login', data => {
+        console.log("loggedin with " + data.loginUsername + " and " + data.loginAvatar + " into " + currentRoom.id)
+        console.log(currentRoom)
+        randomDelta = Math.floor(Math.random()*250)
+        currentUser = new User(randomDelta, data.loginUsername, data.loginAvatar, currentRoom, (1000 + randomDelta), (250 + randomDelta))
+
+        // Tell server, who we are.
+        socket.emit('userConnected', {user: currentUser})
+    })
+
 
     // Update the userlist.
     let userList = document.querySelector('#currentUserList')
     function displayOnlineList(item, index){
-        let userItem = document.createElement('li')
-        userItem.classList.add('nav-item')
+        if(JSON.stringify(item.currentRoom) === JSON.stringify(currentRoom)) {
+            let userItem = document.createElement('li')
+            userItem.classList.add('nav-item')
 
-        let userLink = document.createElement('a')
-        userLink.classList.add('nav-link')
-        userLink.textContent =  item.username
+            let userLink = document.createElement('a')
+            userLink.classList.add('nav-link')
+            userLink.textContent = item.username
 
-        if(item.uniqueId === currentUser.uniqueId){
-            userLink.style.fontWeight = 'bold'
+            if (item.uniqueId === currentUser.uniqueId) {
+                userLink.style.fontWeight = 'bold'
+            }
+
+            userItem.appendChild(userLink)
+            userList.appendChild(userItem)
         }
-
-        userItem.appendChild(userLink)
-        userList.appendChild(userItem)
     }
 
     // Update avatar positions
     function displayAvatars(item, index){
-        let avatar = document.createElement('div')
-        let avatarImg = document.createElement('img')
-        avatarImg.src = item.avatarImg
+        if(JSON.stringify(item.currentRoom) === JSON.stringify(currentRoom)) {
+            let avatar = document.createElement('div')
+            let avatarImg = document.createElement('img')
+            avatarImg.src = item.avatarImg
 
-        avatar.appendChild(avatarImg)
-        avatar.classList.add('avatar')
-        avatar.style.left = item.avatarPositionX + "px"
-        avatar.style.top = item.avatarPositionY + "px"
+            avatar.appendChild(avatarImg)
+            avatar.classList.add('avatar')
+            avatar.style.left = item.avatarPositionX + "px"
+            avatar.style.top = item.avatarPositionY + "px"
 
-        if(item.uniqueId === currentUser.uniqueId){
-            avatar.id = 'my-avatar'
-            avatarImg.id = 'my-avatar' // Yes, I know ids should be unique among DOM elements...
-            myAvatar = avatar
-        } else {
-            avatar.id = item.uniqueId
+            if (item.uniqueId === currentUser.uniqueId) {
+                avatar.id = 'my-avatar'
+                avatarImg.id = 'my-avatar' // Yes, I know ids should be unique among DOM elements...
+                myAvatar = avatar
+            } else {
+                avatar.id = item.uniqueId
+            }
+
+            let avatarName = document.createElement('span')
+            avatarName.innerHTML = item.username
+            avatar.appendChild(avatarName)
+
+            maincanvas.appendChild(avatar)
+            console.log(avatar)
+            avatarList.push(avatar)
         }
-
-        let avatarName = document.createElement('span')
-        avatarName.innerHTML = item.username
-        avatar.appendChild(avatarName)
-
-        maincanvas.appendChild(avatar)
-        console.log(avatar)
-        avatarList.push(avatar)
     }
 
     function displayUser(item, index){
@@ -359,7 +353,7 @@ class mediaFrame {
             let userCircle = document.createElement('div')
             userCircle.classList.add('msg-user-circle')
             let userInitials = document.createElement('span')
-            userInitials.textContent = 'HP'
+            userInitials.textContent = data.username.charAt(0).toUpperCase()
             userCircle.appendChild(userInitials)
 
 

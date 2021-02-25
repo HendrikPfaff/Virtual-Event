@@ -100,8 +100,9 @@ io.on('connection', socket => {
         // Refresh userlist.
         socket.uniqueId = data.user.uniqueId
         socket.username = data.user.username
+        socket.currentRoom = data.user.currentRoom
         currentUsersOnline.push(data.user)
-        console.log("'" + socket.username + "'(" + socket.uniqueId + ") connected")
+        console.log("'" + socket.username + "'(" + socket.uniqueId + ") connected to " + socket.currentRoom.id)
 
         // Broadcast the userlist everytime a new user joins.
         io.sockets.emit('update', {onlineList: currentUsersOnline})
